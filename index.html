@@ -1,0 +1,441 @@
+# Animation-Pro-<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inoxient Abdullah | Next-Gen 3D Experience</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(180deg, #0a192f 0%, #203a43 50%, #0f2027 100%);
+            overflow-x: hidden;
+            color: #fff;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Deep Water Aquarium Background Animation */
+        .aquarium-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .water-overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 0%, rgba(0, 221, 255, 0.15) 0%, transparent 70%);
+            animation: waterGlow 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes waterGlow {
+            0% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        /* 3D Animated Fishes */
+        .fish {
+            position: absolute;
+            width: 80px;
+            height: 40px;
+            background: linear-gradient(90deg, #ff7b00, #ffae00);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            filter: drop-shadow(0 5px 15px rgba(255,123,0,0.6));
+            opacity: 0.85;
+        }
+
+        .fish::after {
+            content: '';
+            position: absolute;
+            right: -15px;
+            top: 10px;
+            width: 0;
+            height: 0;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+            border-left: 20px solid #ff7b00;
+            animation: tailWag 0.3s infinite alternate;
+            transform-origin: left center;
+        }
+
+        @keyframes tailWag {
+            0% { transform: rotate(15deg); }
+            100% { transform: rotate(-15deg); }
+        }
+
+        /* Fish Movements */
+        .fish1 { top: 20%; left: -100px; animation: swimRight 14s linear infinite; transform: scale(1.2); }
+        .fish2 { top: 45%; right: -100px; animation: swimLeft 18s linear infinite; transform: scale(0.9) scaleX(-1); }
+        .fish3 { top: 70%; left: -100px; animation: swimRight 22s linear infinite; transform: scale(1.5); filter: drop-shadow(0 5px 15px rgba(0,221,255,0.6)); background: linear-gradient(90deg, #00ddff, #0072ff); }
+        .fish3::after { border-left-color: #00ddff; }
+
+        @keyframes swimRight {
+            0% { left: -120px; }
+            100% { left: 105%; }
+        }
+
+        @keyframes swimLeft {
+            0% { right: -120px; }
+            100% { right: 105%; }
+        }
+
+        /* Main Content Container */
+        .main-container {
+            position: relative;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .header-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #00f2fe, #4facfe, #ff0844);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            filter: drop-shadow(0 2px 10px rgba(0,242,254,0.3));
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #a0aec0;
+            margin-bottom: 50px;
+            max-width: 600px;
+        }
+
+        /* Next-Level 3D Magic Box */
+        .magic-box-container {
+            perspective: 1000px;
+            margin: 40px 0;
+            cursor: pointer;
+        }
+
+        .magic-box {
+            width: 150px;
+            height: 150px;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateX(-20deg) rotateY(45deg);
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: floatBox 4s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatBox {
+            0% { transform: rotateX(-20deg) rotateY(45deg) translateY(0px); }
+            100% { transform: rotateX(-20deg) rotateY(225deg) translateY(-15px); }
+        }
+
+        .magic-box:hover {
+            transform: rotateX(-20deg) rotateY(180deg) scale(1.1);
+        }
+
+        .box-face {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: rgba(0, 242, 254, 0.2);
+            border: 2px solid #00f2fe;
+            box-shadow: 0 0 30px rgba(0, 242, 254, 0.4), inset 0 0 15px rgba(0, 242, 254, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #fff;
+            user-select: none;
+        }
+
+        .front  { transform: translateZ(75px); }
+        .back   { transform: rotateY(180deg) translateZ(75px); }
+        .left   { transform: rotateY(-90deg) translateZ(75px); }
+        .right  { transform: rotateY(90deg) translateZ(75px); }
+        .top    { transform: rotateX(90deg) translateZ(75px); background: rgba(255, 8, 68, 0.3); border-color: #ff0844; }
+        .bottom { transform: rotateX(-90deg) translateZ(75px); }
+
+        /* Magic Jump Fish Effect */
+        .magic-fish {
+            position: fixed;
+            width: 100px;
+            height: 50px;
+            background: linear-gradient(90deg, #ff0844, #ffb199);
+            border-radius: 50%;
+            z-index: 999;
+            display: none;
+            pointer-events: none;
+            filter: drop-shadow(0 0 25px #ff0844);
+        }
+        .magic-fish::after {
+            content: '';
+            position: absolute;
+            right: -18px;
+            top: 12px;
+            width: 0;
+            height: 0;
+            border-top: 12px solid transparent;
+            border-bottom: 12px solid transparent;
+            border-left: 22px solid #ff0844;
+        }
+
+        /* Dynamic Form Contact Section */
+        .contact-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 24px;
+            width: 100%;
+            max-width: 450px;
+            margin-top: 40px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .contact-panel h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #fff, #00f2fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        .input-group input, .input-group textarea {
+            width: 100%;
+            padding: 14px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 12px;
+            color: #fff;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .input-group input:focus, .input-group textarea:focus {
+            border-color: #00f2fe;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(45deg, #00f2fe, #4facfe);
+            border: none;
+            border-radius: 12px;
+            color: #000;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            box-shadow: 0 5px 20px rgba(0,242,254,0.4);
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,242,254,0.6);
+        }
+
+        /* Footer & TikTok Branding Section */
+        .footer-section {
+            margin-top: 60px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 30px;
+            width: 100%;
+            max-width: 700px;
+        }
+
+        .promo-text {
+            font-size: 1.3rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+            color: #e2e8f0;
+            text-shadow: 0 0 10px rgba(255,255,255,0.2);
+        }
+
+        .tiktok-card {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(45deg, #ff0050, #00f2fe);
+            padding: 14px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(255, 0, 80, 0.3);
+        }
+
+        .tiktok-card:hover {
+            transform: scale(1.08) translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 242, 254, 0.5);
+        }
+
+        .tiktok-icon {
+            font-weight: 900;
+            background: #000;
+            color: #fff;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+
+        /* Hint Text */
+        .hint {
+            font-size: 0.85rem;
+            color: #718096;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="aquarium-bg">
+        <div class="water-overlay"></div>
+        <div class="fish fish1"></div>
+        <div class="fish fish2"></div>
+        <div class="fish fish3"></div>
+    </div>
+
+    <div class="magic-fish" id="magicFish"></div>
+
+    <div class="main-container">
+        
+        <h1 class="header-title">Inoxient Abdullah</h1>
+        <p class="subtitle">Experience Ultra HDR Next-Level 3D Fluid Web Animations</p>
+
+        <div class="magic-box-container" onclick="triggerMagicBox(event)">
+            <div class="magic-box">
+                <div class="box-face front">🎁</div>
+                <div class="box-face back">✨</div>
+                <div class="box-face left">🔮</div>
+                <div class="box-face right">⭐</div>
+                <div class="box-face top">OPEN</div>
+                <div class="box-face bottom">⚡</div>
+            </div>
+            <p class="hint">Click the 3D Magic Box to Release a Fish!</p>
+        </div>
+
+        <div class="contact-panel">
+            <h3>Send Me a Message Directly</h3>
+            <form action="mailto:your-email@example.com" method="post" enctype="text/plain">
+                <div class="input-group">
+                    <input type="text" name="Name" placeholder="Your Name" required>
+                </div>
+                <div class="input-group">
+                    <input type="email" name="Email" placeholder="Your Email Address" required>
+                </div>
+                <div class="input-group">
+                    <textarea name="Message" rows="4" placeholder="Describe the website you want to build..." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Email Now</button>
+            </form>
+        </div>
+
+        <div class="footer-section">
+            <p class="promo-text">IF ANYONE WANTS A PROFESSIONAL WEBSITE BUILT, MESSAGE ME NOW!</p>
+            
+            <a href="https://www.tiktok.com/@inoxient.abdullah.1?_r=1&_t=ZS-97R5z47lPUn" target="_blank" class="tiktok-card">
+                <span class="tiktok-icon">🎦</span>
+                @inoxient.abdullah.1
+            </a>
+        </div>
+
+    </div>
+
+    <script>
+        // Magic Box Interactive Click Animation
+        function triggerMagicBox(event) {
+            const fish = document.getElementById('magicFish');
+            
+            // Box coordinates to start the fish from the box position
+            const rect = event.currentTarget.getBoundingClientRect();
+            const startX = rect.left + rect.width / 2;
+            const startY = rect.top;
+
+            // Audio synthesis for click experience
+            if (window.AudioContext || window.webkitAudioContext) {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.frequency.setValueAtTime(440, ctx.currentTime);
+                gain.gain.setValueAtTime(0.1, ctx.currentTime);
+                osc.start();
+                gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+                osc.stop(ctx.currentTime + 0.3);
+            }
+
+            // Fish rendering and setup
+            fish.style.left = `${startX}px`;
+            fish.style.top = `${startY}px`;
+            fish.style.display = 'block';
+            fish.style.transform = 'scale(0.2) rotate(0deg)';
+            fish.style.opacity = '1';
+
+            // Random jump direction values
+            const targetX = Math.random() * (window.innerWidth - 150);
+            const targetY = Math.random() * (window.innerHeight / 2);
+
+            // Smooth high dynamic animation timeline
+            let startTime = null;
+            function animateFish(timestamp) {
+                if (!startTime) startTime = timestamp;
+                const progress = (timestamp - startTime) / 1200; // 1.2 Seconds fly time
+
+                if (progress < 1) {
+                    // Parabolic arc formula for realism jump
+                    const currentX = startX + (targetX - startX) * progress;
+                    const currentY = startY + (targetY - startY) * progress - Math.sin(progress * Math.PI) * 250;
+                    const scale = 0.2 + (1.3 * progress);
+                    const rotation = progress * 360;
+
+                    fish.style.left = `${currentX}px`;
+                    fish.style.top = `${currentY}px`;
+                    fish.style.transform = `scale(${scale}) rotate(${rotation}deg)`;
+                    
+                    if(progress > 0.8) {
+                        fish.style.opacity = 1 - ((progress - 0.8) * 5);
+                    }
+
+                    requestAnimationFrame(animateFish);
+                } else {
+                    fish.style.display = 'none';
+                }
+            }
+            requestAnimationFrame(animateFish);
+        }
+    </script>
+</body>
+</html>
